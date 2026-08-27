@@ -1,0 +1,63 @@
+:root {
+  /* Surfaces — Obsidian Gilt */
+  --canvas: #0a0a0b;
+  --elevated: #121214;
+  --surface: #1a1a1c;
+
+  /* Borders */
+  --border-gold: rgba(201, 162, 39, 0.22);
+  --border-smoke: rgba(255, 255, 255, 0.06);
+
+  /* Accent — single gold family */
+  --gold: #c9a227;
+  --gold-hover: #e8c547;
+  --gold-wash: rgba(201, 162, 39, 0.06);
+
+  /* Text */
+  --text: #f4f0e6;
+  --text-secondary: #a8a29e;
+  --text-muted: #78716c;
+
+  /* Type */
+  --font-sans: "Satoshi", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Scale — perfect fourth ~1.333 from 1rem */
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-2xl: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem);
+  --text-display: clamp(2.75rem, 2rem + 3.5vw, 5rem);
+  --text-brand: clamp(3.25rem, 2.4rem + 4.5vw, 6.5rem);
+
+  --leading-tight: 1.08;
+  --leading-snug: 1.25;
+  --leading-body: 1.65;
+
+  --tracking-tight: -0.02em;
+  --tracking-brand: -0.03em;
+
+  /* Space — 8px rhythm */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --section-gap: clamp(5rem, 4rem + 4vw, 8rem);
+  --page-pad: clamp(1.25rem, 4vw, 3.5rem);
+  --max-width: 72rem;
+
+  /* Radius / motion */
+  --radius: 8px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 180ms;
+  --duration: 280ms;
+  --duration-slow: 520ms;
+}
