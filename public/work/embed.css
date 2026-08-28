@@ -1,0 +1,92 @@
+html.is-embed,
+html.is-embed body {
+  overflow: hidden !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+html.is-embed::-webkit-scrollbar,
+html.is-embed body::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+html.is-embed .caption {
+  display: none !important;
+}
+
+html.is-embed body {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 0 !important;
+}
+
+html.is-embed .stage {
+  width: 100% !important;
+  height: 100% !important;
+  gap: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+html.is-embed .device {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  overflow: hidden !important;
+}
+
+html.is-embed .btn-rail,
+html.is-embed .device::before,
+html.is-embed .device::after,
+html.is-embed .island {
+  display: none !important;
+}
+
+html.is-embed .screen {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 0 !important;
+}
+
+html.is-embed .content {
+  overflow: hidden !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+html.is-embed .content::-webkit-scrollbar {
+  display: none !important;
+}
+
+html.is-embed .min-h-screen {
+  min-height: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+html.is-embed .wrap {
+  max-width: none !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+html.is-embed nav {
+  position: relative !important;
+  top: 0 !important;
+}

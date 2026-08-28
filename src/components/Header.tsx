@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import { brand, nav, ui } from "../data/content"
 import styles from "./Header.module.css"
 
@@ -31,13 +32,9 @@ export function Header() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
       <div className={`container ${styles.inner}`}>
-        <a
-          href="#top"
-          className={styles.wordmark}
-          aria-label={`${brand.name} — strona główna`}
-        >
+        <Link to="/" className={styles.wordmark} aria-label={`${brand.name} — strona główna`}>
           {brand.name}
-        </a>
+        </Link>
 
         <nav className={styles.nav} aria-label={ui.primaryNav}>
           <ul className={styles.list}>
@@ -52,7 +49,7 @@ export function Header() {
         </nav>
 
         <div className={styles.actions}>
-          <a href="#contact" className={`btn btn--ghost ${styles.cta}`}>
+          <a href="/#contact" className={`btn btn--ghost ${styles.cta}`}>
             {ui.startProject}
           </a>
           <button
@@ -105,7 +102,7 @@ export function Header() {
           ))}
           <li>
             <a
-              href="#contact"
+              href="/#contact"
               className={`btn btn--primary ${styles.mobileCta}`}
               onClick={closeMenu}
             >

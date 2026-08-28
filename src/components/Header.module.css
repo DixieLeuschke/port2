@@ -136,11 +136,20 @@
   background: var(--elevated);
   border-left: 1px solid var(--border-smoke);
   transform: translateX(100%);
-  transition: transform var(--duration-slow) var(--ease-out);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform var(--duration-slow) var(--ease-out),
+    visibility 0s linear var(--duration-slow);
 }
 
 .mobileNavOpen {
   transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    transform var(--duration-slow) var(--ease-out),
+    visibility 0s linear 0s;
 }
 
 .mobileList {
@@ -171,6 +180,13 @@
   margin-top: var(--space-4);
 }
 
+@media (min-width: 861px) {
+  .mobileNav,
+  .mobileOverlay {
+    display: none;
+  }
+}
+
 @media (max-width: 860px) {
   .inner {
     grid-template-columns: 1fr auto;
@@ -191,6 +207,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .mobileNav {
+    transition: none;
+  }
+
+  .mobileNavOpen {
     transition: none;
   }
 

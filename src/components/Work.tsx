@@ -1,8 +1,12 @@
-import { work, workSection, ui } from "../data/content"
+import { workSection } from "../data/content"
+import { useProjects } from "../hooks/useProjects"
 import { Reveal } from "./Reveal"
+import { WorkCard } from "./WorkCard"
 import styles from "./Work.module.css"
 
 export function Work() {
+  const { data, loading, error } = useProjects()
+
   return (
     <section id="work" className={styles.section} aria-labelledby="work-title">
       <div className="container">
@@ -15,35 +19,43 @@ export function Work() {
           </div>
         </Reveal>
 
-        <ul className={styles.list}>
-          {work.map((item, i) => (
-            <li key={item.index} className={styles.row}>
-              <Reveal delayMs={i * 50}>
-                <article
-                  className={`${styles.item} ${i === 0 ? styles.itemFeatured : ""}`}
-                >
-                  <span className={styles.index} aria-hidden="true">
-                    {item.index}
-                  </span>
-                  <div className={styles.main}>
-                    <div className={styles.titleRow}>
-                      <h3 className={styles.projectTitle}>{item.title}</h3>
-                      {item.isPlaceholder ? (
-                        <span className={styles.placeholder}>{ui.placeholderLabel}</span>
-                      ) : null}
-                    </div>
-                    <p className={styles.outcome}>{item.outcome}</p>
+        {loading ? <p className={styles.state}>Ładowanie prac…</p> : null}
+        {error ? <p className={styles.stateError}>{error}</p> : null}
+
+        {data ? (
+          <div className={styles.rows}>
+            {data.rows.map((row, rowIndex) => (
+              <section
+                key={row.id}
+                className={`${styles.row} ${styles[`row--${row.id}`]}`}
+                aria-labelledby={`work-row-${row.id}`}
+              >
+                <Reveal delayMs={rowIndex * 40}>
+                  <div className={styles.rowHead}>
+                    <h3 id={`work-row-${row.id}`} className={styles.rowTitle}>
+                      {row.label}
+                    </h3>
+                    <p className={styles.rowLede}>{row.lede}</p>
                   </div>
-                  <p className={styles.meta}>
-                    <span>{item.year}</span>
-                    <span aria-hidden="true"> · </span>
-                    <span>{item.role}</span>
-                  </p>
-                </article>
-              </Reveal>
-            </li>
-          ))}
-        </ul>
+                </Reveal>
+
+                {row.items.length ? (
+                  <ul className={styles.grid}>
+                    {row.items.map((item, i) => (
+                      <li key={item.slug} className={styles.cell}>
+                        <Reveal delayMs={rowIndex * 40 + i * 60}>
+                          <WorkCard item={item} />
+                        </Reveal>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className={styles.emptyRow}>Brak projektów w tej kategorii.</p>
+                )}
+              </section>
+            ))}
+          </div>
+        ) : null}
       </div>
     </section>
   )

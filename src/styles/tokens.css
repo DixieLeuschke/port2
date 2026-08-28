@@ -1,22 +1,22 @@
 :root {
-  /* Surfaces — Obsidian Gilt */
-  --canvas: #0a0a0b;
-  --elevated: #121214;
-  --surface: #1a1a1c;
+  /* Surfaces — Obsidian Gilt (lifted) */
+  --canvas: #0f0f11;
+  --elevated: #171719;
+  --surface: #202023;
 
   /* Borders */
-  --border-gold: rgba(201, 162, 39, 0.22);
-  --border-smoke: rgba(255, 255, 255, 0.06);
+  --border-gold: rgba(201, 162, 39, 0.24);
+  --border-smoke: rgba(255, 255, 255, 0.085);
 
   /* Accent — single gold family */
   --gold: #c9a227;
   --gold-hover: #e8c547;
-  --gold-wash: rgba(201, 162, 39, 0.06);
+  --gold-wash: rgba(201, 162, 39, 0.07);
 
   /* Text */
-  --text: #f4f0e6;
-  --text-secondary: #a8a29e;
-  --text-muted: #78716c;
+  --text: #f6f2e8;
+  --text-secondary: #b5afa8;
+  --text-muted: #8a8480;
 
   /* Type */
   --font-sans: "Satoshi", system-ui, sans-serif;

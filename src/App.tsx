@@ -1,27 +1,22 @@
-import { Approach } from "./components/Approach"
-import { Contact } from "./components/Contact"
-import { Footer } from "./components/Footer"
-import { Header } from "./components/Header"
-import { Hero } from "./components/Hero"
-import { Work } from "./components/Work"
-import { ui } from "./data/content"
+import { Route, Routes } from "react-router-dom"
+import { CaseStudyPage } from "./pages/CaseStudyPage"
+import { HomePage } from "./pages/HomePage"
+import { AdminDashboardPage } from "./pages/admin/AdminDashboardPage"
+import { AdminLayout } from "./pages/admin/AdminLayout"
+import { AdminLoginPage } from "./pages/admin/AdminLoginPage"
+import { AdminProjectFormPage } from "./pages/admin/AdminProjectFormPage"
 
 export default function App() {
   return (
-    <>
-      <a className="skip-link" href="#main">
-        {ui.skipToContent}
-      </a>
-      <div id="top">
-        <Header />
-        <main id="main">
-          <Hero />
-          <Work />
-          <Approach />
-          <Contact />
-        </main>
-        <Footer />
-      </div>
-    </>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/prace/:slug" element={<CaseStudyPage />} />
+      <Route path="/admin/login" element={<AdminLoginPage />} />
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<AdminDashboardPage />} />
+        <Route path="projects/new" element={<AdminProjectFormPage />} />
+        <Route path="projects/:slug" element={<AdminProjectFormPage />} />
+      </Route>
+    </Routes>
   )
 }

@@ -1,0 +1,364 @@
+<!DOCTYPE html><html lang="en" class="scroll-smooth"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,600&amp;display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.cdnfonts.com/css/satoshi');
+    @import url('https://fonts.cdnfonts.com/css/cabinet-grotesk');
+
+    :root {
+      --bg-black: #0a0a0a;
+      --bg-card: #111111;
+      --bg-overlay: #1a1a1a;
+      --accent-teal: #16b896;
+      --accent-teal-dark: #0a6b5f;
+      --border-subtle: rgba(255, 255, 255, 0.05);
+      --border-teal: rgba(22, 184, 150, 0.2);
+    }
+
+    body {
+      font-family: 'Satoshi', sans-serif;
+      background-color: var(--bg-black);
+      color: #e5e5e5;
+      overflow-x: hidden;
+    }
+
+    .font-display {
+      font-family: 'Cabinet Grotesk', sans-serif;
+    }
+
+    .font-serif {
+      font-family: 'Crimson Pro', serif;
+    }
+
+    .glow-teal {
+      box-shadow: 0 0 50px -15px rgba(22, 184, 150, 0.15);
+    }
+
+    .border-gradient {
+      border: 1px solid var(--border-subtle);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .border-gradient:hover {
+      border-color: var(--accent-teal);
+      box-shadow: 0 0 60px -10px rgba(22, 184, 150, 0.3);
+    }
+
+    .text-teal-gradient {
+      background: linear-gradient(to right, #16b896, #0a6b5f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stagger-reveal {
+      animation: reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    @keyframes reveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .nav-blur {
+      background-color: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(16px);
+    }
+
+    .hero-glow-big {
+      filter: blur(180px);
+      background: radial-gradient(circle, rgba(22, 184, 150, 0.15) 0%, transparent 70%);
+    }
+
+    .asymmetric-offset {
+      transform: translateY(120px);
+    }
+
+    .diagonal-line {
+      width: 150%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--accent-teal), transparent);
+      transform: rotate(-5deg);
+      position: absolute;
+      z-index: 0;
+      opacity: 0.1;
+    }
+  </style>
+</head>
+<body>
+  <div class="min-h-screen bg-[#0a0a0a] relative" data-sd-id="1">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-8 py-8 flex justify-between items-center nav-blur border-b border-white/5" data-sd-id="2">
+      <div class="flex items-center gap-2 group cursor-pointer" data-sd-id="3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#16b896] to-[#0a6b5f] flex items-center justify-center p-[1px]" data-sd-id="4">
+          <div class="w-full h-full rounded-xl bg-[#0a0a0a] flex items-center justify-center" data-sd-id="5">
+            <span class="text-sm font-bold text-[#16b896]" data-sd-id="6">A</span>
+          </div>
+        </div>
+        <span class="font-display font-semibold text-base tracking-[0.2em] uppercase text-white" data-sd-id="7">Alexander</span>
+      </div>
+      <div class="hidden md:flex gap-14 items-center text-[10px] tracking-[0.4em] uppercase text-gray-400 font-bold" data-sd-id="8">
+        <a href="#work" id="nav-work-link" class="hover:text-[#16b896] transition-colors" data-sd-id="9">Work</a>
+        <a href="#capabilities" id="nav-capabilities-link" class="hover:text-[#16b896] transition-colors" data-sd-id="10">Expertise</a>
+        <a href="#about" id="nav-about-link" class="hover:text-[#16b896] transition-colors" data-sd-id="11">Philosophy</a>
+        <a href="#contact" id="nav-contact-link" class="px-8 py-3 border border-[#16b896]/30 text-[#16b896] hover:bg-[#16b896] hover:text-[#0a0a0a] transition-all rounded-full" data-sd-id="12">Contact</a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-64 pb-32 px-6 flex flex-col items-center text-center relative overflow-hidden" data-sd-id="13">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[600px] hero-glow-big pointer-events-none" data-sd-id="14"></div>
+      
+      <span class="stagger-reveal text-[#16b896] text-sm uppercase font-bold tracking-[0.6em] mb-12 block" style="animation-delay: 0.1s" data-sd-id="15">Architecture &amp; Algorithms</span>
+      <h1 class="stagger-reveal font-display text-[9rem] md:text-[11rem] font-bold tracking-tighter leading-[0.85] mb-16 max-w-6xl" style="animation-delay: 0.2s" data-sd-id="16">
+        Digital products, <br>
+        <span class="text-teal-gradient italic font-serif font-semibold" data-sd-id="17">refined by AI.</span>
+      </h1>
+      <div class="stagger-reveal grid grid-cols-12 w-full max-w-7xl" style="animation-delay: 0.3s" data-sd-id="18">
+        <p class="col-start-4 col-span-6 text-gray-400 text-2xl leading-relaxed mb-16 px-12" data-sd-id="19">
+          Bridging the gap between human intuition and machine intelligence through sophisticated interfaces and autonomous workflows.
+        </p>
+      </div>
+      <div class="stagger-reveal flex gap-8" style="animation-delay: 0.4s" data-sd-id="20">
+        <a href="#work" id="hero-view-work" class="px-12 py-6 bg-gradient-to-r from-[#16b896] to-[#0a6b5f] text-white font-bold rounded-full hover:scale-105 transition-all shadow-[0_20px_40px_-10px_rgba(22,184,150,0.3)]" data-sd-id="21">
+          View Selected Projects
+        </a>
+      </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="py-64 px-8 relative" data-sd-id="22">
+      <div class="diagonal-line top-1/2 left-0" data-sd-id="23"></div>
+      <div class="max-w-7xl mx-auto grid md:grid-cols-12 gap-24 items-center" data-sd-id="24">
+        <div class="md:col-span-6" data-sd-id="25">
+          <h2 class="font-display text-6xl leading-[1.1] font-medium" data-sd-id="26">
+            Designing for the <br>
+            <span class="text-white italic font-serif" data-sd-id="27">next epoch</span> of computing.
+          </h2>
+        </div>
+        <div class="md:col-span-5 md:col-start-8 text-gray-400 space-y-10" data-sd-id="28">
+          <p class="text-2xl leading-relaxed font-light" data-sd-id="29">
+            I specialize in building AI-native products, scalable design systems, and seamless automation flows that eliminate complexity and amplify human potential.
+          </p>
+          <div class="flex flex-wrap gap-5" data-sd-id="30">
+            <span class="px-6 py-3 bg-white/[0.03] border border-white/10 rounded-full text-xs font-bold tracking-widest uppercase text-[#16b896]" data-sd-id="31">AI-Native Design</span>
+            <span class="px-6 py-3 bg-white/[0.03] border border-white/10 rounded-full text-xs font-bold tracking-widest uppercase" data-sd-id="32">Design Systems</span>
+            <span class="px-6 py-3 bg-white/[0.03] border border-white/10 rounded-full text-xs font-bold tracking-widest uppercase" data-sd-id="33">LLM Workflows</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work Section - Asymmetric Editorial Grid -->
+    <section id="work" class="py-64 px-8 max-w-[1600px] mx-auto" data-sd-id="34">
+      <div class="flex flex-col mb-32" data-sd-id="35">
+         <span class="text-[#16b896] text-xs uppercase tracking-[0.6em] mb-6 block" data-sd-id="36">Selected Index</span>
+         <h2 class="font-display text-8xl font-bold tracking-tight" data-sd-id="37">Editorial Portfolio</h2>
+      </div>
+
+      <div class="grid grid-cols-12 gap-y-64 gap-x-12" data-sd-id="38">
+        <!-- Card 1: Full Width Top -->
+        <div class="col-span-12" data-sd-id="39">
+          <a href="#" id="work-bartx-dynamic" class="group block border-gradient bg-[#111] p-12 rounded-[2.5rem] glow-teal" data-sd-id="40">
+            <div class="aspect-[21/9] mb-12 bg-zinc-900 overflow-hidden rounded-[2rem] border border-white/5 relative" data-sd-id="41">
+              <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60 z-10" data-sd-id="42"></div>
+              <div class="w-full h-full bg-gradient-to-br from-zinc-800 to-zinc-950 flex items-center justify-center group-hover:scale-105 transition-transform duration-700" data-sd-id="43">
+                <iconify-icon icon="lucide:bot" class="text-[10rem] text-white/5"></iconify-icon>
+              </div>
+            </div>
+            <div class="flex justify-between items-end px-4" data-sd-id="44">
+              <div data-sd-id="45">
+                <span class="text-white/30 text-sm font-bold tracking-widest uppercase mb-4 block" data-sd-id="46">01 — Artificial Intelligence</span>
+                <h3 class="text-6xl font-display font-semibold group-hover:text-[#16b896] transition-colors" data-sd-id="47">BartX Intelligence</h3>
+              </div>
+              <p class="text-gray-500 text-xl max-w-md text-right leading-relaxed mb-2" data-sd-id="48">Advanced predictive analytics for high-frequency algorithmic environments.</p>
+            </div>
+          </a>
+        </div>
+
+        <!-- Card 2: Left Column (Offset) -->
+        <div class="col-span-12 md:col-span-6 asymmetric-offset" data-sd-id="49">
+          <a href="#" id="work-finlux-dynamic" class="group block border-gradient bg-[#111] p-10 rounded-[2.5rem] glow-teal" data-sd-id="50">
+            <div class="aspect-[3/4] mb-10 bg-zinc-900 overflow-hidden rounded-[2rem] border border-white/5 relative" data-sd-id="51">
+              <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60 z-10" data-sd-id="52"></div>
+              <div class="w-full h-full bg-gradient-to-br from-zinc-800 to-zinc-950 flex items-center justify-center group-hover:scale-105 transition-transform duration-700" data-sd-id="53">
+                <iconify-icon icon="lucide:wallet" class="text-8xl text-white/5"></iconify-icon>
+              </div>
+            </div>
+            <div class="px-2" data-sd-id="54">
+              <span class="text-white/30 text-xs font-bold tracking-widest uppercase mb-4 block" data-sd-id="55">02 — Fintech</span>
+              <h3 class="text-5xl font-display font-semibold group-hover:text-[#16b896] transition-colors mb-4" data-sd-id="56">FinLux Premium</h3>
+              <p class="text-gray-500 text-lg leading-relaxed" data-sd-id="57">Wealth management platforms architected for the digital sovereign generation.</p>
+            </div>
+          </a>
+        </div>
+
+        <!-- Card 3: Right Column -->
+        <div class="col-span-12 md:col-span-6" data-sd-id="58">
+          <a href="#" id="work-notion-dynamic" class="group block border-gradient bg-[#111] p-10 rounded-[2.5rem] glow-teal" data-sd-id="59">
+            <div class="aspect-[3/4] mb-10 bg-zinc-900 overflow-hidden rounded-[2rem] border border-white/5 relative" data-sd-id="60">
+              <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60 z-10" data-sd-id="61"></div>
+              <div class="w-full h-full bg-gradient-to-br from-zinc-800 to-zinc-950 flex items-center justify-center group-hover:scale-105 transition-transform duration-700" data-sd-id="62">
+                <iconify-icon icon="lucide:layers" class="text-8xl text-white/5"></iconify-icon>
+              </div>
+            </div>
+            <div class="px-2" data-sd-id="63">
+              <span class="text-white/30 text-xs font-bold tracking-widest uppercase mb-4 block" data-sd-id="64">03 — Automation</span>
+              <h3 class="text-5xl font-display font-semibold group-hover:text-[#16b896] transition-colors mb-4" data-sd-id="65">OS: One Notion</h3>
+              <p class="text-gray-500 text-lg leading-relaxed" data-sd-id="66">An autonomous operating system for builders and complex team hierarchies.</p>
+            </div>
+          </a>
+        </div>
+
+        <!-- Card 4: Full Width Bottom -->
+        <div class="col-span-12 mt-64" data-sd-id="67">
+          <a href="#" id="work-systems-dynamic" class="group block border-gradient bg-[#111] p-12 rounded-[2.5rem] glow-teal" data-sd-id="68">
+            <div class="aspect-[21/9] mb-12 bg-zinc-900 overflow-hidden rounded-[2rem] border border-white/5 relative" data-sd-id="69">
+              <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60 z-10" data-sd-id="70"></div>
+              <div class="w-full h-full bg-gradient-to-br from-zinc-800 to-zinc-950 flex items-center justify-center group-hover:scale-105 transition-transform duration-700" data-sd-id="71">
+                <iconify-icon icon="lucide:component" class="text-[10rem] text-white/5"></iconify-icon>
+              </div>
+            </div>
+            <div class="flex justify-between items-end px-4" data-sd-id="72">
+              <div data-sd-id="73">
+                <span class="text-white/30 text-sm font-bold tracking-widest uppercase mb-4 block" data-sd-id="74">04 — Scalable Design</span>
+                <h3 class="text-6xl font-display font-semibold group-hover:text-[#16b896] transition-colors" data-sd-id="75">Core System v2</h3>
+              </div>
+              <p class="text-gray-500 text-xl max-w-md text-right leading-relaxed mb-2" data-sd-id="76">Unified visual languages for multi-platform SaaS enterprise environments.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Capabilities Section - Alternating Alignment -->
+    <section id="capabilities" class="py-64 bg-[#111] relative" data-sd-id="77">
+       <div class="diagonal-line bottom-0 left-0" data-sd-id="78"></div>
+      <div class="max-w-7xl mx-auto px-8" data-sd-id="79">
+        <div class="text-center mb-48" data-sd-id="80">
+          <span class="text-[#16b896] text-xs uppercase tracking-[0.6em] mb-6 block" data-sd-id="81">Tech Stack</span>
+          <h2 class="font-display text-7xl font-bold uppercase" data-sd-id="82">Expertise Archetype</h2>
+        </div>
+
+        <div class="space-y-48" data-sd-id="83">
+          <!-- Item 1: Left -->
+          <div class="grid md:grid-cols-12 gap-12 items-center" data-sd-id="84">
+            <div class="md:col-span-5" data-sd-id="85">
+              <h4 class="text-5xl font-display font-bold mb-8 flex items-center gap-6" data-sd-id="86">
+                <iconify-icon icon="lucide:palette" class="text-[#16b896] text-6xl"></iconify-icon>
+                Product Design
+              </h4>
+              <p class="text-2xl text-gray-400 font-light leading-relaxed" data-sd-id="87">Architectural UI / Strategy / High-Fidelity Design. Focusing on clarity, cognitive efficiency, and aesthetic dominance.</p>
+            </div>
+            <div class="md:col-span-6 md:col-start-7 h-[1px] bg-white/10" data-sd-id="88"></div>
+          </div>
+
+          <!-- Item 2: Right -->
+          <div class="grid md:grid-cols-12 gap-12 items-center" data-sd-id="89">
+            <div class="md:col-span-6 h-[1px] bg-white/10" data-sd-id="90"></div>
+            <div class="md:col-span-5 md:col-start-8 text-right" data-sd-id="91">
+              <h4 class="text-5xl font-display font-bold mb-8 flex flex-row-reverse items-center gap-6" data-sd-id="92">
+                <iconify-icon icon="lucide:brain-circuit" class="text-[#16b896] text-6xl"></iconify-icon>
+                AI Workflows
+              </h4>
+              <p class="text-2xl text-gray-400 font-light leading-relaxed" data-sd-id="93">LLM pipeline architecture and autonomous agent development. Designing the future of intent-driven interfaces.</p>
+            </div>
+          </div>
+
+          <!-- Item 3: Left -->
+          <div class="grid md:grid-cols-12 gap-12 items-center" data-sd-id="94">
+            <div class="md:col-span-5" data-sd-id="95">
+              <h4 class="text-5xl font-display font-bold mb-8 flex items-center gap-6" data-sd-id="96">
+                <iconify-icon icon="lucide:code-2" class="text-[#16b896] text-6xl"></iconify-icon>
+                Frontend Engineering
+              </h4>
+              <p class="text-2xl text-gray-400 font-light leading-relaxed" data-sd-id="97">Production-ready React environments, Tailwind CSS architectures, and performant motion systems.</p>
+            </div>
+            <div class="md:col-span-6 md:col-start-7 h-[1px] bg-white/10" data-sd-id="98"></div>
+          </div>
+
+           <!-- Item 4: Right -->
+           <div class="grid md:grid-cols-12 gap-12 items-center" data-sd-id="99">
+            <div class="md:col-span-6 h-[1px] bg-white/10" data-sd-id="100"></div>
+            <div class="md:col-span-5 md:col-start-8 text-right" data-sd-id="101">
+              <h4 class="text-5xl font-display font-bold mb-8 flex flex-row-reverse items-center gap-6" data-sd-id="102">
+                <iconify-icon icon="lucide:settings-2" class="text-[#16b896] text-6xl"></iconify-icon>
+                Automation Ops
+              </h4>
+              <p class="text-2xl text-gray-400 font-light leading-relaxed" data-sd-id="103">Engineering custom API integrations and autonomous business logic to maximize team velocity.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-64 px-8 max-w-7xl mx-auto overflow-visible relative" data-sd-id="104">
+      <div class="grid md:grid-cols-12 gap-20 items-center" data-sd-id="105">
+        <div class="md:col-span-5 relative" data-sd-id="106">
+          <div class="absolute -inset-10 border border-[#16b896]/20 rounded-[3rem] -rotate-3" data-sd-id="107"></div>
+          <div class="relative aspect-[3/4] bg-zinc-800 rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl rotate-3" data-sd-id="108">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Alexander" class="w-full h-full object-cover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-1000" data-sd-id="109">
+          </div>
+        </div>
+        <div class="md:col-span-6 md:col-start-7 space-y-12" data-sd-id="110">
+          <h2 class="font-display text-7xl font-bold tracking-tight leading-[1.1]" data-sd-id="111">Architecting the <br><span class="italic font-serif font-semibold text-[#16b896]" data-sd-id="112">Invisible.</span></h2>
+          <div class="text-gray-400 space-y-8 text-2xl font-light leading-relaxed" data-sd-id="113">
+            <p data-sd-id="114">I am a principal product designer and AI engineer focused on building tools that feel like magic but work like clockwork.</p>
+            <p data-sd-id="115">Operating from London, I help early-stage startups and enterprises navigate the complexities of machine intelligence through refined, human-centric design languages.</p>
+            <p data-sd-id="116">I believe design is the architecture of delegation—creating systems where intelligence serves intent without friction.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-64 px-8" data-sd-id="117">
+      <div class="max-w-7xl mx-auto rounded-[5rem] bg-gradient-to-b from-white/[0.03] to-transparent border border-white/5 p-32 text-center relative overflow-hidden" data-sd-id="118">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] hero-glow-big pointer-events-none opacity-40" data-sd-id="119"></div>
+        
+        <span class="text-[#16b896] text-xs uppercase tracking-[0.6em] mb-12 block font-bold" data-sd-id="120">Collaborate With Precision</span>
+        <h2 class="font-display text-8xl md:text-[9rem] font-bold mb-20 max-w-5xl mx-auto leading-none tracking-tighter" data-sd-id="121">Let’s build something <span class="text-teal-gradient italic font-serif" data-sd-id="122">precise.</span></h2>
+        
+        <div class="flex flex-col md:flex-row justify-center items-center gap-10" data-sd-id="123">
+          <a href="mailto:hello@alexander.design" id="cta-email-final" class="px-16 py-8 bg-gradient-to-r from-[#16b896] to-[#0a6b5f] text-white font-bold text-xl rounded-full hover:scale-105 transition-all shadow-[0_30px_60px_-15px_rgba(22,184,150,0.4)]" data-sd-id="124">
+            Start a Conversation
+          </a>
+          <a href="#" id="cta-calendar-final" class="px-16 py-8 border-2 border-white/10 hover:border-[#16b896]/50 text-white font-bold text-xl rounded-full transition-all" data-sd-id="125">
+            Book Strategy Call
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-12 border-t border-white/5" data-sd-id="126">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12" data-sd-id="127">
+        <div class="text-[10px] text-gray-600 tracking-[0.4em] uppercase font-bold" data-sd-id="128">
+          © 2024 Alexander Studio — London, UK — AI Builder / Designer
+        </div>
+        <div class="flex gap-12 text-[10px] tracking-[0.4em] uppercase font-bold text-white/40" data-sd-id="129">
+          <a href="#" id="social-twitter-final" class="hover:text-[#16b896] transition-colors" data-sd-id="130">Twitter</a>
+          <a href="#" id="social-linkedin-final" class="hover:text-[#16b896] transition-colors" data-sd-id="131">LinkedIn</a>
+          <a href="#" id="social-github-final" class="hover:text-[#16b896] transition-colors" data-sd-id="132">GitHub</a>
+          <a href="#" id="social-readcv-final" class="hover:text-[#16b896] transition-colors" data-sd-id="133">Read.cv</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+<link rel="stylesheet" href="/work/embed.css" />
+<script>
+  if (location.search.includes("embed")) {
+    document.documentElement.classList.add("is-embed");
+  }
+</script>
+</body></html>

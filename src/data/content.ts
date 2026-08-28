@@ -1,5 +1,20 @@
 /** Treść strony — TODO: treść do potwierdzenia z klientem */
 
+export type {
+  ProjectInput,
+  ProjectsData,
+  WorkCategory,
+  WorkItem,
+  WorkRow,
+} from "../../shared/project.ts"
+
+export {
+  WORK_CATEGORIES,
+  WORK_ROW_META,
+  categoryLabel,
+  getFrameForCategory,
+} from "../../shared/project.ts"
+
 export const brand = {
   name: "John Pavulon",
   role: "Kierunek kreatywny",
@@ -8,64 +23,28 @@ export const brand = {
 } as const
 
 export const nav = [
-  { label: "Prace", href: "#work" },
-  { label: "Podejście", href: "#approach" },
-  { label: "O mnie", href: "#about" },
-  { label: "Kontakt", href: "#contact" },
+  { label: "Prace", href: "/#work" },
+  { label: "Podejście", href: "/#approach" },
+  { label: "O mnie", href: "/#about" },
+  { label: "Kontakt", href: "/#contact" },
 ] as const
 
 export const hero = {
-  headline: "Systemy marek z cichą pewnością.",
+  headline: "Mniej efektu. Więcej sensu.",
   support:
-    "Projektuję powściągliwe tożsamości dla firm B2B, które wolą obecność od hałasu.",
-  primaryCta: { label: "Rozpocznij projekt", href: "#contact" },
-  secondaryCta: { label: "Zobacz prace", href: "#work" },
+    "Kierunek kreatywny dla marek, które wolą przemyślany system od kolejnego rebrandu w pośpiechu.",
+  primaryCta: { label: "Rozpocznij projekt", href: "/#contact" },
+  secondaryCta: { label: "Zobacz prace", href: "/#work" },
   image: {
     src: "/hero.jpg",
-    alt: "Ilustracja: nocna praca przy biurku z widokiem na oświetlone miasto",
+    alt: "Ilustracja: nocna praca przy biurku z widokiem na oświetlone miasto w deszczu",
   },
 } as const
-
-export type WorkItem = {
-  index: string
-  title: string
-  year: string
-  role: string
-  outcome: string
-  isPlaceholder?: boolean
-}
 
 export const workSection = {
   title: "Wybrane prace",
-  lede: "Przykładowe formaty współpracy — docelowe case studies do uzupełnienia.",
+  lede: "Trzy linie współpracy — mobile, landing page i koncepcje AI. Docelowe case studies do uzupełnienia.",
 } as const
-
-export const work: WorkItem[] = [
-  {
-    index: "01",
-    title: "Identyfikacja meblarska",
-    year: "2025",
-    role: "Identyfikacja · Art direction",
-    outcome: "Spokojny znak i system druku — galeryjna cisza zamiast efektu.",
-    isPlaceholder: true,
-  },
-  {
-    index: "02",
-    title: "System marki finansowej",
-    year: "2024",
-    role: "System marki · Web",
-    outcome: "Warstwowy dark UI i hierarchia typograficzna dla biura inwestycyjnego.",
-    isPlaceholder: true,
-  },
-  {
-    index: "03",
-    title: "Kampania sezonowa",
-    year: "2024",
-    role: "Kampania · Editorial",
-    outcome: "Sezonowy język kampanii ze złotymi liniami i oszczędną fotografią.",
-    isPlaceholder: true,
-  },
-]
 
 export const approach = {
   title: "Podejście",
@@ -105,4 +84,11 @@ export const ui = {
   closeMenu: "Zamknij menu",
   startProject: "Rozpocznij projekt",
   placeholderLabel: "Przykład",
+  viewCaseStudy: "Zobacz case study",
+  openDemo: "Otwórz demo w nowej karcie",
+  demoLabel: "Interaktywne demo",
+  backToWork: "Wróć do prac",
+  caseStudyLabel: "Case study",
+  placeholderNote:
+    "To przykładowy format prezentacji — docelowe case study zostanie uzupełnione materiałami klienta.",
 } as const

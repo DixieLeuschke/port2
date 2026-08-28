@@ -1,4 +1,4 @@
-import { brand, hero } from "../data/content"
+import { hero } from "../data/content"
 import styles from "./Hero.module.css"
 
 export function Hero() {
@@ -9,8 +9,8 @@ export function Hero() {
           src={hero.image.src}
           alt={hero.image.alt}
           className={styles.image}
-          width={1920}
-          height={1080}
+          width={1024}
+          height={434}
           fetchPriority="high"
         />
         <div className={styles.treatment} aria-hidden="true" />
@@ -18,10 +18,11 @@ export function Hero() {
         <div className={styles.wash} aria-hidden="true" />
       </div>
 
-      <div className={`container ${styles.content}`}>
-        <p className={styles.eyebrow}>{brand.role}</p>
+      <div className={styles.content}>
         <h1 id="hero-brand" className={styles.brand}>
-          {brand.name}
+          <span className={styles.brandGiven}>John</span>
+          <span className={styles.brandFamily}>Pavulon</span>
+          <span className={styles.brandRule} aria-hidden="true" />
         </h1>
         <p className={styles.headline}>{hero.headline}</p>
         <p className={styles.support}>{hero.support}</p>
