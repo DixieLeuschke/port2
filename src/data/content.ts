@@ -30,9 +30,9 @@ export const nav = [
 ] as const
 
 export const hero = {
-  headline: "Mniej efektu. Więcej sensu.",
+  headline: "Mieszkam i projektuję w szałerku. Jebać tych co żyją w domach i mieszkaniach.",
   support:
-    "Kierunek kreatywny dla marek, które wolą przemyślany system od kolejnego rebrandu w pośpiechu.",
+    "Pozdrowienia dla cierpiących. P. S Chętnie pożyczę od kogoś 20zł",
   primaryCta: { label: "Rozpocznij projekt", href: "/#contact" },
   secondaryCta: { label: "Zobacz prace", href: "/#work" },
   image: {
