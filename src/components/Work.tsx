@@ -12,6 +12,10 @@ export function Work() {
       <div className="container">
         <Reveal>
           <div className={styles.intro}>
+            <div className={styles.introAuroras} aria-hidden="true">
+              <div className={styles.introAurora} />
+              <div className={`${styles.introAurora} ${styles.introAuroraViolet}`} />
+            </div>
             <h2 id="work-title" className={styles.title}>
               {workSection.title}
             </h2>

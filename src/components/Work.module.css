@@ -15,12 +15,12 @@
   background:
     radial-gradient(
       120% 85% at 50% -18%,
-      color-mix(in srgb, var(--gold) 4%, transparent) 0%,
-      transparent 72%
+      color-mix(in srgb, #5b6fd4 5%, transparent) 0%,
+      transparent 68%
     ),
     linear-gradient(
       180deg,
-      #141416 0%,
+      #131316 0%,
       var(--canvas) 28%,
       var(--canvas) 72%,
       #121214 100%
@@ -40,13 +40,72 @@
 }
 
 .intro {
+  position: relative;
+  isolation: isolate;
   max-width: 36rem;
   margin-inline: auto;
   margin-bottom: var(--space-8);
   text-align: center;
 }
 
+.introAuroras {
+  position: absolute;
+  inset: -4.25rem -12% auto;
+  height: 12rem;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.introAurora {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: min(22rem, 58vw);
+  height: 100%;
+  opacity: 0.72;
+  background:
+    radial-gradient(
+      ellipse 54% 70% at 30% 46%,
+      color-mix(in srgb, #5b78d8 13%, transparent) 0%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 50% 64% at 60% 40%,
+      color-mix(in srgb, #7a68c8 10%, transparent) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 42% 52% at 48% 58%,
+      color-mix(in srgb, #4a88c8 7%, transparent) 0%,
+      transparent 68%
+    );
+  filter: blur(44px);
+  transform: translateX(-6%);
+}
+
+.introAuroraViolet {
+  left: auto;
+  right: 8%;
+  width: min(20rem, 52vw);
+  opacity: 0.52;
+  background:
+    radial-gradient(
+      ellipse 58% 72% at 52% 44%,
+      color-mix(in srgb, #8f6fd8 11%, transparent) 0%,
+      transparent 74%
+    ),
+    radial-gradient(
+      ellipse 46% 58% at 68% 52%,
+      color-mix(in srgb, #a078c8 8%, transparent) 0%,
+      transparent 70%
+    );
+  filter: blur(48px);
+  transform: translateX(4%);
+}
+
 .title {
+  position: relative;
+  z-index: 1;
   font-size: var(--text-2xl);
   font-weight: 600;
   letter-spacing: var(--tracking-tight);
@@ -55,9 +114,17 @@
 }
 
 .lede {
+  position: relative;
+  z-index: 1;
   color: var(--text-secondary);
   max-width: 42ch;
   margin-inline: auto;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .introAuroras {
+    display: none;
+  }
 }
 
 .rows {
@@ -87,29 +154,35 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.9;
-  background: linear-gradient(
-    160deg,
-    color-mix(in srgb, var(--elevated) 88%, var(--canvas)) 0%,
-    var(--elevated) 38%,
-    var(--elevated) 68%,
-    color-mix(in srgb, var(--elevated) 92%, var(--surface)) 100%
-  );
+  opacity: 0.55;
+  background:
+    radial-gradient(
+      88% 115% at 14% 0%,
+      color-mix(in srgb, #4f5fd8 6%, var(--elevated)) 0%,
+      transparent 58%
+    ),
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--elevated) 96%, #141824) 0%,
+      var(--elevated) 45%,
+      var(--elevated) 75%,
+      color-mix(in srgb, var(--elevated) 97%, #181428) 100%
+    );
 }
 
 .row--mobile::before {
   background:
     radial-gradient(
       90% 120% at 18% 0%,
-      color-mix(in srgb, var(--gold) 10%, var(--elevated)) 0%,
-      transparent 68%
+      color-mix(in srgb, #5a6be8 7%, var(--elevated)) 0%,
+      transparent 58%
     ),
     linear-gradient(
       160deg,
-      color-mix(in srgb, var(--elevated) 86%, var(--canvas)) 0%,
-      var(--elevated) 40%,
-      var(--elevated) 72%,
-      color-mix(in srgb, var(--elevated) 90%, var(--surface)) 100%
+      color-mix(in srgb, var(--elevated) 96%, #13182a) 0%,
+      var(--elevated) 45%,
+      var(--elevated) 75%,
+      color-mix(in srgb, var(--elevated) 97%, #1a1630) 100%
     );
 }
 
@@ -117,15 +190,15 @@
   background:
     radial-gradient(
       85% 110% at 82% 8%,
-      color-mix(in srgb, #16b896 8%, var(--elevated)) 0%,
-      transparent 70%
+      color-mix(in srgb, #6b5fd8 6%, var(--elevated)) 0%,
+      transparent 60%
     ),
     linear-gradient(
       155deg,
-      color-mix(in srgb, var(--elevated) 84%, #0f1214) 0%,
-      var(--elevated) 42%,
-      var(--elevated) 72%,
-      color-mix(in srgb, var(--elevated) 88%, #0a6b5f) 100%
+      color-mix(in srgb, var(--elevated) 96%, #121624) 0%,
+      var(--elevated) 45%,
+      var(--elevated) 75%,
+      color-mix(in srgb, var(--elevated) 97%, #1c1434) 100%
     );
 }
 
@@ -133,15 +206,15 @@
   background:
     radial-gradient(
       95% 115% at 50% -5%,
-      color-mix(in srgb, #7c8fd4 8%, var(--elevated)) 0%,
-      transparent 68%
+      color-mix(in srgb, #7b6fd4 7%, var(--elevated)) 0%,
+      transparent 58%
     ),
     linear-gradient(
       175deg,
-      color-mix(in srgb, var(--elevated) 84%, #111018) 0%,
-      var(--elevated) 44%,
-      var(--elevated) 76%,
-      color-mix(in srgb, var(--elevated) 90%, var(--surface)) 100%
+      color-mix(in srgb, var(--elevated) 96%, #151428) 0%,
+      var(--elevated) 48%,
+      var(--elevated) 78%,
+      color-mix(in srgb, var(--elevated) 97%, #201838) 100%
     );
 }
 

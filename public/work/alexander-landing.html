@@ -91,6 +91,36 @@
       z-index: 0;
       opacity: 0.1;
     }
+
+    .about-avatar {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 38% 28%, rgba(22, 184, 150, 0.14) 0%, transparent 42%),
+        radial-gradient(circle at 72% 78%, rgba(10, 107, 95, 0.12) 0%, transparent 38%),
+        linear-gradient(165deg, #141414 0%, #0d1514 48%, #101010 100%);
+      opacity: 0.82;
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .about-avatar:hover {
+      opacity: 1;
+    }
+
+    .about-avatar svg {
+      width: 74%;
+      height: auto;
+      filter: drop-shadow(0 24px 48px rgba(22, 184, 150, 0.08));
+      transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .about-avatar:hover svg {
+      transform: translateY(-4px) scale(1.02);
+    }
   </style>
 </head>
 <body>
@@ -100,10 +130,10 @@
       <div class="flex items-center gap-2 group cursor-pointer" data-sd-id="3">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#16b896] to-[#0a6b5f] flex items-center justify-center p-[1px]" data-sd-id="4">
           <div class="w-full h-full rounded-xl bg-[#0a0a0a] flex items-center justify-center" data-sd-id="5">
-            <span class="text-sm font-bold text-[#16b896]" data-sd-id="6">A</span>
+            <span class="text-sm font-bold text-[#16b896]" data-sd-id="6">B</span>
           </div>
         </div>
-        <span class="font-display font-semibold text-base tracking-[0.2em] uppercase text-white" data-sd-id="7">Alexander</span>
+        <span class="font-display font-semibold text-base tracking-[0.2em] uppercase text-white" data-sd-id="7">Bartłomiej</span>
       </div>
       <div class="hidden md:flex gap-14 items-center text-[10px] tracking-[0.4em] uppercase text-gray-400 font-bold" data-sd-id="8">
         <a href="#work" id="nav-work-link" class="hover:text-[#16b896] transition-colors" data-sd-id="9">Work</a>
@@ -306,7 +336,30 @@
         <div class="md:col-span-5 relative" data-sd-id="106">
           <div class="absolute -inset-10 border border-[#16b896]/20 rounded-[3rem] -rotate-3" data-sd-id="107"></div>
           <div class="relative aspect-[3/4] bg-zinc-800 rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl rotate-3" data-sd-id="108">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Alexander" class="w-full h-full object-cover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-1000" data-sd-id="109">
+            <div class="about-avatar" role="img" aria-label="Bartłomiej — avatar" data-sd-id="109">
+              <svg viewBox="0 0 320 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <linearGradient id="avatarTeal" x1="80" y1="40" x2="240" y2="360" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#16b896"/>
+                    <stop offset="1" stop-color="#0a6b5f"/>
+                  </linearGradient>
+                  <radialGradient id="avatarHalo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(160 150) rotate(90) scale(130 160)">
+                    <stop stop-color="#16b896" stop-opacity="0.22"/>
+                    <stop offset="1" stop-color="#16b896" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <ellipse cx="160" cy="150" rx="118" ry="132" fill="url(#avatarHalo)"/>
+                <circle cx="160" cy="152" r="86" fill="#151515" stroke="url(#avatarTeal)" stroke-opacity="0.35" stroke-width="1.5"/>
+                <path d="M78 318c28-54 74-82 82-82s54 28 82 82" stroke="url(#avatarTeal)" stroke-opacity="0.45" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M78 318c28-54 74-82 82-82s54 28 82 82v82H78v-82z" fill="#121212"/>
+                <path d="M118 138c12-18 32-28 42-28s30 10 42 28" stroke="#16b896" stroke-opacity="0.28" stroke-width="1.25" stroke-linecap="round"/>
+                <path d="M132 176c10 8 22 12 28 12s18-4 28-12" stroke="#16b896" stroke-opacity="0.22" stroke-width="1.25" stroke-linecap="round"/>
+                <circle cx="132" cy="158" r="4" fill="#16b896" fill-opacity="0.55"/>
+                <circle cx="188" cy="158" r="4" fill="#16b896" fill-opacity="0.55"/>
+                <path d="M160 92v18M160 214v16" stroke="#16b896" stroke-opacity="0.12" stroke-width="1"/>
+                <text x="160" y="176" text-anchor="middle" font-family="'Cabinet Grotesk', 'Satoshi', sans-serif" font-size="52" font-weight="700" fill="url(#avatarTeal)" fill-opacity="0.92">B</text>
+              </svg>
+            </div>
           </div>
         </div>
         <div class="md:col-span-6 md:col-start-7 space-y-12" data-sd-id="110">
@@ -343,7 +396,7 @@
     <footer class="py-20 px-12 border-t border-white/5" data-sd-id="126">
       <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12" data-sd-id="127">
         <div class="text-[10px] text-gray-600 tracking-[0.4em] uppercase font-bold" data-sd-id="128">
-          © 2024 Alexander Studio — London, UK — AI Builder / Designer
+          © 2024 Bartłomiej — London, UK — AI Builder / Designer
         </div>
         <div class="flex gap-12 text-[10px] tracking-[0.4em] uppercase font-bold text-white/40" data-sd-id="129">
           <a href="#" id="social-twitter-final" class="hover:text-[#16b896] transition-colors" data-sd-id="130">Twitter</a>
