@@ -66,8 +66,8 @@ export const approach = {
 
 export const about = {
   title: "O mnie",
-  body: "Projektuję kierunek kreatywny dla marek, które chcą być przemyślane, nie głośne. Pracuję samodzielnie, między dniami w studio a współpracą zdalną z zespołami w Europie.",
-  meta: ["Warszawa · zdalnie w EU", "Tożsamość · systemy · web editorial"],
+  body: "Chętnie pożyczę 10zł.",
+  meta: ["Projektuje w szałerku, miastowi burżuje za dychę."],
 } as const
 
 export const contact = {
