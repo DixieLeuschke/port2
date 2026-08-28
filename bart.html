@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BarthMoney — mockup (UX polish)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Serif:wght@700&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Serif:wght@700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS — wielopoziomowy dark + złote akcenty
+   ============================================================ */
+:root {
+  /* Surfaces */
+  --bg: #191c1f;
+  --bg-elevated: #1d2124;
+  --surface: #22262a;
+  --surface-hover: #272c30;
+  --surface-soft: #202428;
+  --scrim: #171a1d;
+  --input: #1a1e22;
+
+  /* Text — WCAG AA ≥ 4.5:1 na --bg / --bg-elevated */
+  --text-primary: #e9e5dc;
+  --text-secondary: #c8c4bc;
+  --text-muted: #b0aca4;
+  --text-faint: #959189;
+
+  /* Accent — CTA, aktywny nav/chip, focus */
+  --gold: #d4af37;
+  --gold-hover: #e0c04e;
+  --gold-on-surface: #e0c04e;
+  --gold-soft: rgba(212, 175, 55, .12);
+  --on-gold: #1b1a17;
+
+  /* Semantic money */
+  --income: #8fb28b;
+  --expense: #d96c6c;
+  --error: #d96c6c;
+  --error-bg: rgba(217, 108, 108, .12);
+  --error-border: rgba(217, 108, 108, .28);
+
+  /* Borders */
+  --border: rgba(255, 255, 255, .065);
+  --border-strong: rgba(255, 255, 255, .10);
+  --border-gold: rgba(212, 175, 55, .28);
+
+  /* S1 — radius: 8 / 12 / pill (+ device chrome) */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-card: 12px;
+  --radius-btn: 12px;
+  --radius-sheet: 12px;
+  --radius-device: 40px;
+  --radius-pill: 999px;
+
+  /* S2 — touch targets */
+  --touch-min: 44px;
+  --touch-comfortable: 48px;
+  --touch-nav: 56px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --gutter: 16px;
+
+  /* R1 — fluid phone frame */
+  --frame-max: 390px;
+  --frame-ratio: 9 / 19.5;
+  --status-h: 44px;
+  --nav-h: 72px;
+
+  /* H3 — 4 type sizes (caption ≥12px WCAG) */
+  --type-caption: 12px;
+  --type-body: 14px;
+  --type-title: 17px;
+  --type-display: 32px;
+
+  /* R2 — breakpoints (wartości używane w @media poniżej) */
+  --bp-sm: 420px;
+  --bp-md: 860px;
+  --bp-lg: 1240px;
+
+  --font-serif: "IBM Plex Serif", Georgia, serif;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Sans", ui-monospace, monospace;
+  --shadow-card: 0 12px 28px rgba(0, 0, 0, .22);
+  --shadow-sheet: 0 -10px 40px rgba(0, 0, 0, .35);
+  --focus-ring: 0 0 0 2px var(--bg-elevated), 0 0 0 4px var(--gold);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; }
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--type-body);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+}
+
+/* —— Page / frames —— */
+.page {
+  min-height: 100vh;
+  padding: clamp(24px, 4vw, 48px) clamp(12px, 3vw, 24px);
+}
+
+.frames {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-6);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.frame-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  width: min(var(--frame-max), 100%);
+}
+
+.frame-label {
+  font-size: var(--type-caption);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* —— Device frame (R1: fluid) —— */
+.phone {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--frame-ratio);
+  height: auto;
+  border-radius: var(--radius-device);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .38);
+  overflow: hidden;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 844px;
+  transition: outline-color .2s ease, outline-offset .2s ease;
+}
+
+.phone.is-focused {
+  outline: 2px solid var(--gold);
+  outline-offset: 6px;
+}
+
+.status-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--status-h);
+  padding: 0 var(--space-5);
+  font-size: var(--type-body);
+  font-weight: 700;
+  color: var(--text-primary);
+  pointer-events: none;
+}
+
+.svg-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.status-icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-icons svg,
+.status-icons .icon { width: 16px; height: 16px; fill: currentColor; }
+
+.nav-item svg,
+.nav-item .icon {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+}
+
+.home-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  width: 134px;
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, .16);
+  pointer-events: none;
+}
+
+/* —— Bottom nav —— */
+.bottom-nav {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: var(--nav-h);
+  padding: 0 var(--space-2) 14px;
+  background: var(--scrim);
+  border-top: 1px solid var(--border);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 64px;
+  min-height: var(--touch-nav);
+  height: var(--touch-nav);
+  padding: var(--space-1) var(--space-2);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--type-caption);
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: color .15s ease, background .15s ease;
+}
+
+.nav-item.is-active { background: var(--gold-soft); color: var(--gold-on-surface); }
+.nav-item:hover:not([aria-disabled="true"]) { color: var(--text-secondary); }
+.nav-item[aria-disabled="true"] { cursor: default; opacity: .85; }
+
+/* —— Shared screen chrome —— */
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--status-h);
+  padding-bottom: var(--nav-h);
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+
+.screen-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.screen-scroll::-webkit-scrollbar { display: none; }
+
+/* —— P5: utilities —— */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.focus-ring:focus-visible,
+.btn:focus-visible,
+.chip:focus-visible,
+.nav-item:focus-visible,
+.send-btn:focus-visible,
+.sheet-close:focus-visible,
+.segment button:focus-visible,
+.numpad button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  box-shadow: var(--focus-ring);
+}
+
+/* —— S3: Surface system (card / banner / sheet / input) —— */
+.surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+}
+
+.surface--soft { background: var(--surface-soft); }
+
+.surface--raised { box-shadow: var(--shadow-card); }
+
+.surface--strong { border-color: var(--border-strong); }
+
+.surface--sheet {
+  background: var(--bg-elevated);
+  border-color: var(--border-strong);
+  border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
+  border-bottom: 0;
+  box-shadow: var(--shadow-sheet);
+}
+
+.surface--input {
+  background: var(--input);
+  border-radius: var(--radius-pill);
+}
+
+.money {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.money--display {
+  font-family: var(--font-serif);
+  font-variant-numeric: tabular-nums;
+}
+.money-expense { color: var(--expense); }
+.money-income { color: var(--income); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-min);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-btn);
+  font-family: var(--font-sans);
+  font-size: var(--type-body);
+  font-weight: 700;
+  cursor: pointer;
+  border: 0;
+  touch-action: manipulation;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.btn--primary { background: var(--gold); color: var(--on-gold); }
+.btn--primary:hover { background: var(--gold-hover); }
+.btn--secondary {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+}
+.btn--secondary:hover { border-color: var(--border-strong); background: var(--surface-hover); }
+.btn--ghost {
+  background: transparent;
+  border: 0;
+  color: var(--text-secondary);
+  min-height: var(--touch-min);
+  font-size: var(--type-body);
+}
+.btn--ghost:hover { color: var(--text-primary); }
+.btn--block { width: 100%; }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--touch-min);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-soft);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--type-caption);
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  touch-action: manipulation;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.chip:hover,
+.chip.is-selected {
+  border-color: var(--border-gold);
+  color: var(--gold-on-surface);
+  background: var(--gold-soft);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
+  background: var(--gold-soft);
+  border: 1px solid var(--border-gold);
+  color: var(--gold-on-surface);
+  font-size: var(--type-caption);
+  font-weight: 700;
+}
+
+.badge svg { width: 12px; height: 12px; }
+
+/* ============================================================
+   SCREEN 1 — Pulpit
+   ============================================================ */
+.pulpit-header {
+  padding: var(--space-4) var(--gutter) var(--space-3);
+}
+
+.pulpit-header h1 {
+  font-family: var(--font-sans);
+  font-size: var(--type-title);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+
+.pulpit-header h1 span { color: var(--text-secondary); }
+
+.pulpit-header p {
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: var(--type-caption);
+  font-weight: 600;
+}
+
+.balance-card {
+  margin: 0 var(--gutter) var(--space-4);
+  padding: var(--space-5) var(--space-4);
+}
+
+.balance-label {
+  font-size: var(--type-caption);
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.balance-amount {
+  margin-top: var(--space-2);
+  font-family: var(--font-serif);
+  font-size: var(--type-display);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.balance-amount.is-ticking {
+  animation: amount-pulse .45s ease;
+}
+
+@keyframes amount-pulse {
+  0% { opacity: .55; transform: translateY(2px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.trust-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: var(--type-caption);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.trust-row svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--gold);
+}
+
+.balance-account {
+  margin-top: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--type-body);
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin: 0 var(--gutter) var(--space-3);
+}
+
+.stat-card {
+  padding: var(--space-3);
+}
+
+.stat-card .label {
+  font-size: var(--type-caption);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.stat-card .value {
+  margin-top: 6px;
+  font-size: var(--type-body);
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+.review-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0 var(--gutter) var(--space-4);
+  padding: 12px 14px;
+  color: var(--text-primary);
+  font-size: var(--type-body);
+  font-weight: 600;
+}
+
+.review-banner .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.section-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0 var(--gutter) var(--space-2);
+  font-size: var(--type-body);
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.tx-list {
+  list-style: none;
+  margin: 0 var(--gutter) var(--space-4);
+  padding: 0;
+  overflow: hidden;
+}
+
+.tx-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tx-item:last-child { border-bottom: 0; }
+
+.tx-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.tx-icon svg { width: 16px; height: 16px; }
+
+.tx-meta { flex: 1; min-width: 0; }
+
+.tx-meta .name {
+  font-size: var(--type-body);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tx-meta .cat {
+  margin-top: 2px;
+  font-size: var(--type-caption);
+  color: var(--text-muted);
+}
+
+.tx-amount {
+  font-size: var(--type-body);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pulpit-cta {
+  margin: 0 var(--gutter) var(--space-4);
+}
+
+/* ============================================================
+   SCREEN 2 — Czat
+   ============================================================ */
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--gutter);
+  border-bottom: 1px solid var(--border);
+  background: rgba(29, 33, 36, .92);
+}
+
+.chat-header h2 {
+  font-family: var(--font-sans);
+  font-size: var(--type-title);
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.chat-thread {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--gutter);
+  flex: 1;
+}
+
+.bubble {
+  max-width: 88%;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  font-size: var(--type-body);
+  line-height: 1.45;
+}
+
+.bubble--user {
+  align-self: flex-end;
+  background: var(--surface-hover);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  border-bottom-right-radius: var(--radius-sm);
+  font-weight: 600;
+}
+
+.bubble--app {
+  align-self: flex-start;
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+.bubble--app .hint {
+  margin-top: 6px;
+  font-size: var(--type-caption);
+  color: var(--text-muted);
+}
+
+.bubble--error {
+  align-self: flex-start;
+  max-width: 92%;
+  border-bottom-left-radius: var(--radius-sm);
+  border-left: 3px solid var(--error);
+  background: var(--error-bg);
+  border-top: 1px solid var(--error-border);
+  border-right: 1px solid var(--error-border);
+  border-bottom: 1px solid var(--error-border);
+}
+
+.bubble--error .error-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--expense);
+}
+
+.bubble--error .error-title svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.bubble--error .error-body {
+  margin-top: 6px;
+  color: var(--text-secondary);
+  font-size: var(--type-body);
+}
+
+.error-fix {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.error-fix input {
+  flex: 1;
+  min-height: var(--touch-min);
+  height: var(--touch-min);
+  padding: 0 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-btn);
+  background: var(--input);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--type-body);
+  outline: none;
+}
+
+.error-fix input:focus-visible {
+  border-color: var(--border-gold);
+  box-shadow: var(--focus-ring);
+}
+
+.error-fix .btn {
+  flex-shrink: 0;
+  padding: 0 var(--space-3);
+}
+
+.confirm-card {
+  align-self: stretch;
+  margin-left: 0;
+  padding: var(--space-4);
+}
+
+.confirm-card .amount {
+  font-family: var(--font-serif);
+  font-size: var(--type-title);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.confirm-card .amount-fx {
+  margin-top: 4px;
+  font-size: var(--type-caption);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.confirm-rows {
+  margin-top: var(--space-3);
+  display: grid;
+  gap: 8px;
+}
+
+.confirm-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--type-body);
+}
+
+.confirm-row .k { color: var(--text-muted); }
+.confirm-row .v { color: var(--text-primary); font-weight: 600; text-align: right; }
+.confirm-row--fx .v {
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.confirm-fx-note {
+  margin-top: var(--space-2);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--gold-soft);
+  border: 1px solid var(--border-gold);
+  font-size: var(--type-caption);
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.confirm-status {
+  margin-top: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--type-caption);
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.confirm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.undo-toast {
+  align-self: stretch;
+  display: none;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 12px 14px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  font-size: var(--type-body);
+  font-weight: 600;
+  color: var(--text-secondary);
+  animation: toast-in .28s ease;
+}
+
+.undo-toast.is-visible { display: flex; }
+
+.undo-toast .btn {
+  margin-left: auto;
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: var(--type-caption);
+  color: var(--gold-on-surface);
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Pozioma lista kategorii — stała wysokość, bez flex-wrap (ochrona numpada) */
+.category-chips,
+.chip-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--space-2);
+  align-self: stretch;
+  min-height: 38px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  padding-bottom: 2px;
+}
+
+.category-chips {
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+  mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+}
+
+.category-chips::-webkit-scrollbar,
+.chip-row::-webkit-scrollbar { display: none; }
+
+.category-chips .chip,
+.chip-row .chip {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.chip-row {
+  margin-bottom: var(--space-4);
+  justify-content: flex-start;
+}
+
+.chat-composer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 10px var(--gutter) 12px;
+  border-top: 1px solid var(--border);
+  background: var(--scrim);
+}
+
+.chat-composer input {
+  flex: 1;
+  height: var(--touch-min);
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--type-body);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.chat-composer input::placeholder { color: var(--text-faint); }
+.chat-composer input.focus-ring:focus,
+.chat-composer input.focus-ring:focus-visible {
+  border-color: var(--border-gold);
+  outline-color: var(--gold);
+  box-shadow: var(--focus-ring);
+}
+
+.send-btn {
+  width: var(--touch-min);
+  height: var(--touch-min);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--gold);
+  color: var(--on-gold);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  touch-action: manipulation;
+}
+
+.send-btn:hover { background: var(--gold-hover); }
+.send-btn svg { width: 18px; height: 18px; }
+
+/* ============================================================
+   SCREEN 3 — Szybkie dodanie (bottom sheet)
+   ============================================================ */
+.phone--sheet .screen {
+  background: var(--bg);
+}
+
+.sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(23, 26, 29, .72);
+  pointer-events: none;
+}
+
+.sheet-backdrop .dim-pulpit {
+  padding: var(--space-5) var(--gutter) 0;
+  opacity: .45;
+}
+
+.sheet-backdrop .dim-title {
+  font-family: var(--font-sans);
+  font-size: var(--type-title);
+  font-weight: 700;
+}
+
+.sheet-backdrop .dim-balance {
+  margin-top: 8px;
+  font-size: var(--type-title);
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
+.quick-sheet {
+  position: absolute;
+  left: 0; right: 0; bottom: var(--nav-h);
+  z-index: 20;
+  max-height: calc(100% - var(--status-h) - 48px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sheet-handle {
+  width: 36px;
+  height: 4px;
+  margin: 10px auto 4px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, .16);
+}
+
+.sheet-head {
+  position: relative;
+  padding: 4px var(--gutter) var(--space-3);
+  text-align: center;
+}
+
+.sheet-close {
+  position: absolute;
+  top: 6px;
+  right: var(--gutter);
+  width: var(--touch-min);
+  height: var(--touch-min);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.sheet-close:hover { border-color: var(--border-strong); color: var(--text-primary); }
+.sheet-close svg { width: 16px; height: 16px; }
+
+.quick-sheet.is-closed {
+  transform: translateY(105%);
+  transition: transform .22s ease;
+}
+
+.sheet-head h2 {
+  font-family: var(--font-sans);
+  font-size: var(--type-title);
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.sheet-head p {
+  margin-top: 4px;
+  font-size: var(--type-caption);
+  color: var(--text-muted);
+}
+
+.sheet-body {
+  padding: 0 var(--gutter) var(--space-3);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.sheet-body::-webkit-scrollbar { display: none; }
+
+.segment {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  margin-bottom: var(--space-4);
+}
+
+.segment button {
+  min-height: var(--touch-min);
+  height: var(--touch-min);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--type-body);
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.segment button.is-active {
+  background: var(--gold-soft);
+  color: var(--gold-on-surface);
+}
+
+.amount-display {
+  text-align: center;
+  margin-bottom: var(--space-4);
+}
+
+.amount-display .value {
+  font-family: var(--font-serif);
+  font-size: var(--type-display);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  transition: color .15s ease;
+}
+
+.amount-display.is-expense .value { color: var(--expense); }
+.amount-display.is-income .value { color: var(--income); }
+
+.meta-rows {
+  display: grid;
+  gap: 2px;
+  margin-bottom: var(--space-4);
+  overflow: hidden;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--type-body);
+}
+
+.meta-row:last-child { border-bottom: 0; }
+.meta-row .k { color: var(--text-muted); }
+.meta-row .v { font-weight: 600; color: var(--text-primary); }
+
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: var(--space-3);
+}
+
+.numpad button {
+  min-height: var(--touch-comfortable);
+  height: var(--touch-comfortable);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--type-title);
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.numpad button:hover { background: var(--surface-hover); border-color: var(--border-strong); }
+.numpad button.wide { grid-column: span 1; }
+.numpad button.svg-key svg { width: 20px; height: 20px; }
+
+.sheet-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding-bottom: var(--space-2);
+}
+
+/* ============================================================
+   SCREEN 4 — Empty State
+   ============================================================ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-6) var(--gutter) var(--space-5);
+}
+
+.empty-state__icon {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background: var(--gold-soft);
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+  margin-bottom: var(--space-5);
+}
+
+.empty-state__icon svg { width: 32px; height: 32px; }
+
+.empty-state h2 {
+  font-family: var(--font-sans);
+  font-size: var(--type-title);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  max-width: 16ch;
+}
+
+.empty-state p {
+  margin-top: var(--space-3);
+  color: var(--text-muted);
+  font-size: var(--type-body);
+  line-height: 1.5;
+  max-width: 28ch;
+}
+
+.empty-state .btn {
+  margin-top: var(--space-5);
+  min-width: 200px;
+}
+
+.empty-trust {
+  margin-top: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 280px;
+}
+
+.empty-trust__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  justify-content: center;
+  font-size: var(--type-caption);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.empty-trust__item svg {
+  width: 14px;
+  height: 14px;
+  color: var(--gold);
+}
+
+.empty-balance-preview {
+  margin: 0 var(--gutter) var(--space-2);
+  padding: var(--space-5) var(--space-4);
+  opacity: .55;
+}
+
+.empty-balance-preview .balance-amount {
+  color: var(--text-secondary);
+}
+
+/* —— Responsive (R2: wartości = --bp-*) —— */
+/* --bp-lg: 1240px */
+@media (max-width: 1240px) {
+  .frames { max-width: 860px; }
+}
+
+/* --bp-md: 860px */
+@media (max-width: 860px) {
+  .frames { gap: var(--space-5); }
+}
+
+/* --bp-sm: 420px — fluid frame już skaluje; tu tylko ciaśniejszy gap */
+@media (max-width: 420px) {
+  .frames { gap: var(--space-4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+</style>
+</head>
+<body>
+  <!-- P1: wspólny sprite SVG (status + nawigacja) -->
+  <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="i-signal" viewBox="0 0 24 24"><path fill="currentColor" d="M5 16h2v-4H5v4zm4 0h2V8H9v8zm4 0h2V4h-2v12zm4 0h2v-6h-2v6z"/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 24 24"><path fill="currentColor" d="M2 8.5 12 3l10 5.5V19a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V8.5zm2 .8V18h16V9.3L12 5.1 4 9.3z"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24"><rect x="3" y="7" width="16" height="10" rx="2" fill="currentColor"/><rect x="19" y="10" width="2" height="4" rx="1" fill="currentColor"/><rect x="5" y="9" width="10" height="6" rx="1" fill="#e9e5dc"/></symbol>
+    <symbol id="i-pulpit" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5z"/></symbol>
+    <symbol id="i-tx" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M8 7h11M5 12h14M8 17h11"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M5 6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4 3V6z"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></symbol>
+  </svg>
+
+  <!-- P4: jedno źródło prawdy dla chrome telefonu -->
+  <template id="tpl-status">
+    <div class="status-bar">
+      <span>9:41</span>
+      <div class="status-icons" aria-hidden="true">
+        <svg class="icon"><use href="#i-signal"/></svg>
+        <svg class="icon"><use href="#i-wifi"/></svg>
+        <svg class="icon"><use href="#i-battery"/></svg>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-nav">
+    <nav class="bottom-nav" role="tablist" aria-label="Nawigacja aplikacji — wspólny stan między ekranami">
+      <button type="button" class="nav-item focus-ring" role="tab" data-tab="pulpit" aria-selected="false">
+        <svg class="icon" aria-hidden="true"><use href="#i-pulpit"/></svg>
+        Pulpit
+      </button>
+      <button type="button" class="nav-item focus-ring" role="tab" data-tab="transakcje" aria-selected="false" aria-disabled="true" title="Ekran poza tym mockupem">
+        <svg class="icon" aria-hidden="true"><use href="#i-tx"/></svg>
+        Transakcje
+      </button>
+      <button type="button" class="nav-item focus-ring" role="tab" data-tab="czat" aria-selected="false">
+        <svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>
+        Czat
+      </button>
+      <button type="button" class="nav-item focus-ring" role="tab" data-tab="ustawienia" aria-selected="false" aria-disabled="true" title="Ekran poza tym mockupem">
+        <svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg>
+        Ustawienia
+      </button>
+    </nav>
+  </template>
+
+  <template id="tpl-home">
+    <div class="home-indicator" aria-hidden="true"></div>
+  </template>
+
+  <main class="page">
+    <div class="frames">
+
+      <!-- ==================================================
+           EKRAN 1 — Pulpit
+           ================================================== -->
+      <figure class="frame-wrap">
+        <figcaption class="frame-label">01 — Pulpit</figcaption>
+        <div class="phone" data-screen="pulpit" aria-label="Ekran Pulpit">
+          <div class="screen">
+            <div class="screen-scroll">
+              <header class="pulpit-header">
+                <h1>BarthMoney<span>.</span></h1>
+                <p>Prywatne finanse, lokalnie</p>
+              </header>
+
+              <section class="balance-card surface surface--raised" aria-label="Saldo">
+                <div class="balance-label">Saldo</div>
+                <div class="balance-amount money--display" data-balance-amount data-cents="420400">4 204,00 zł</div>
+                <div class="balance-account">Konto główne · PLN</div>
+                <div class="trust-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                  <span>Działa offline · dane tylko na urządzeniu</span>
+                </div>
+              </section>
+
+              <div class="stat-row">
+                <div class="stat-card surface">
+                  <div class="label">Przychody</div>
+                  <div class="value money money-income">+8 400,00 zł</div>
+                </div>
+                <div class="stat-card surface">
+                  <div class="label">Wydatki</div>
+                  <div class="value money money-expense">−4 196,00 zł</div>
+                </div>
+              </div>
+
+              <div class="review-banner surface surface--strong" role="status">
+                <span class="dot" aria-hidden="true"></span>
+                <span>2 wpisy do sprawdzenia</span>
+              </div>
+
+              <div class="section-title">
+                <span>Ostatnie transakcje</span>
+              </div>
+
+              <ul class="tx-list surface">
+                <li class="tx-item">
+                  <div class="tx-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 9h8M8 13h5"/></svg>
+                  </div>
+                  <div class="tx-meta">
+                    <div class="name">Cursor AI</div>
+                    <div class="cat">Software · 20 USD</div>
+                  </div>
+                  <div class="tx-amount money money-expense">−82,00 zł</div>
+                </li>
+                <li class="tx-item">
+                  <div class="tx-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 7h12l-1 12H7L6 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+                  </div>
+                  <div class="tx-meta">
+                    <div class="name">Biedronka</div>
+                    <div class="cat">Zakupy</div>
+                  </div>
+                  <div class="tx-amount money money-expense">−128,45 zł</div>
+                </li>
+                <li class="tx-item">
+                  <div class="tx-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 17V7h16v10"/><path d="M8 11h8M8 14h5"/></svg>
+                  </div>
+                  <div class="tx-meta">
+                    <div class="name">Wynagrodzenie</div>
+                    <div class="cat">Praca</div>
+                  </div>
+                  <div class="tx-amount money money-income">+8 400,00 zł</div>
+                </li>
+                <li class="tx-item">
+                  <div class="tx-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17H3V9l3-4h8l3 4h2v8h-2"/></svg>
+                  </div>
+                  <div class="tx-meta">
+                    <div class="name">Uber</div>
+                    <div class="cat">Transport</div>
+                  </div>
+                  <div class="tx-amount money money-expense">−27,90 zł</div>
+                </li>
+                <li class="tx-item">
+                  <div class="tx-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9 10.5c1.5-1 4.5-1 6 0M9 13.5c1.5 1 4.5 1 6 0"/></svg>
+                  </div>
+                  <div class="tx-meta">
+                    <div class="name">Spotify</div>
+                    <div class="cat">Subskrypcje</div>
+                  </div>
+                  <div class="tx-amount money money-expense">−23,99 zł</div>
+                </li>
+              </ul>
+
+              <div class="pulpit-cta">
+                <button type="button" class="btn btn--primary btn--block" data-open-quick>Szybkie dodanie</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </figure>
+
+      <!-- ==================================================
+           EKRAN 2 — Czat
+           ================================================== -->
+      <figure class="frame-wrap">
+        <figcaption class="frame-label">02 — Czat</figcaption>
+        <div class="phone" data-screen="czat" aria-label="Ekran Czat">
+          <div class="screen">
+            <header class="chat-header">
+              <h2>Czat</h2>
+              <span class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                Offline
+              </span>
+            </header>
+
+            <div class="screen-scroll">
+              <div class="chat-thread">
+                <div class="bubble bubble--user">Kupiłem Cursor AI za 20 USD</div>
+
+                <div class="bubble bubble--app surface">
+                  Rozpoznałem wydatek SaaS: Cursor AI, 20,00 USD → 82,00 zł.
+                  <div class="hint">Parser lokalny · kurs z ostatniej synchronizacji</div>
+                </div>
+
+                <article class="confirm-card surface surface--raised surface--strong" data-confirm-card aria-label="Potwierdzenie transakcji">
+                  <div class="amount money--display money-expense">−82,00 zł</div>
+                  <div class="amount-fx">oryginalnie 20,00 USD</div>
+                  <div class="confirm-rows">
+                    <div class="confirm-row"><span class="k">Opis</span><span class="v">Cursor AI</span></div>
+                    <div class="confirm-row"><span class="k">Kategoria</span><span class="v">Software</span></div>
+                    <div class="confirm-row confirm-row--fx"><span class="k">Waluta źródłowa</span><span class="v">20,00 USD</span></div>
+                    <div class="confirm-row confirm-row--fx"><span class="k">Kurs</span><span class="v">1 USD = 4,10 PLN</span></div>
+                    <div class="confirm-row"><span class="k">Konto</span><span class="v">Konto główne</span></div>
+                  </div>
+                  <p class="confirm-fx-note">Przewalutowanie bez prowizji aplikacji — widzisz dokładnie ten kurs, którego używamy.</p>
+                  <div class="confirm-status" data-confirm-status>Gotowe do zatwierdzenia</div>
+                  <div class="confirm-actions">
+                    <button type="button" class="btn btn--primary" data-confirm-approve>Zatwierdź</button>
+                    <button type="button" class="btn btn--secondary">Popraw</button>
+                  </div>
+                </article>
+
+                <div class="undo-toast" data-undo-toast role="status" aria-live="polite">
+                  <span>Dodano −82,00 zł</span>
+                  <button type="button" class="btn btn--ghost" data-undo-btn>Cofnij</button>
+                </div>
+
+                <div class="bubble bubble--user">wczoraj coś tam</div>
+
+                <div class="bubble bubble--error" role="alert">
+                  <div class="error-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                    Nie znalazłem kwoty
+                  </div>
+                  <p class="error-body">Dopisz kwotę i walutę — albo wpisz poniżej, a ja od razu poprawię.</p>
+                  <form class="error-fix" data-error-fix action="#">
+                    <label class="visually-hidden" for="error-fix-amount">Kwota do poprawy</label>
+                    <input id="error-fix-amount" type="text" inputmode="decimal" placeholder="np. kawa 18 zł" autocomplete="off">
+                    <button type="submit" class="btn btn--primary">Popraw</button>
+                  </form>
+                </div>
+
+                <div class="bubble bubble--user">Kawa 18</div>
+
+                <div class="bubble bubble--app surface">
+                  Rozpoznałem 18,00 zł, ale wybierz kategorię.
+                </div>
+
+              <div class="category-chips" role="radiogroup" aria-label="Wybór kategorii" data-chip-group>
+                <button type="button" class="chip is-selected" role="radio" aria-checked="true">Jedzenie</button>
+                <button type="button" class="chip" role="radio" aria-checked="false">Restauracje</button>
+                <button type="button" class="chip" role="radio" aria-checked="false">Kawiarnia</button>
+                <button type="button" class="chip" role="radio" aria-checked="false">Zakupy</button>
+                <button type="button" class="chip" role="radio" aria-checked="false">Transport</button>
+                <button type="button" class="chip" role="radio" aria-checked="false">Inne</button>
+              </div>
+              </div>
+            </div>
+
+            <form class="chat-composer" action="#" data-chat-form>
+              <label class="visually-hidden" for="chat-input">Wiadomość</label>
+              <input id="chat-input" class="surface surface--input focus-ring" type="text" placeholder="Napisz, co wydałeś…" autocomplete="off">
+              <button type="submit" class="send-btn focus-ring" aria-label="Wyślij">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h12M13 6l6 6-6 6"/></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </figure>
+
+      <!-- ==================================================
+           EKRAN 3 — Szybkie dodanie
+           ================================================== -->
+      <figure class="frame-wrap">
+        <figcaption class="frame-label">03 — Szybkie dodanie</figcaption>
+        <div class="phone phone--sheet" data-screen="quick" aria-label="Ekran Szybkie dodanie">
+          <div class="screen">
+            <div class="sheet-backdrop" aria-hidden="true">
+              <div class="dim-pulpit">
+                <div class="dim-title">BarthMoney.</div>
+                <div class="dim-balance money--display">4 204,00 zł</div>
+              </div>
+            </div>
+
+            <section class="quick-sheet surface surface--sheet" id="quick-add" aria-label="Szybkie dodanie">
+              <div class="sheet-handle" aria-hidden="true"></div>
+              <header class="sheet-head">
+                <button type="button" class="sheet-close surface surface--soft focus-ring" data-sheet-close aria-label="Zamknij">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </button>
+                <h2>Szybkie dodanie</h2>
+                <p>
+                  <span style="display:inline-flex;align-items:center;gap:6px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                    Działa offline, bez AI
+                  </span>
+                </p>
+              </header>
+
+              <div class="sheet-body">
+                <div class="segment" role="radiogroup" aria-label="Typ transakcji" data-segment>
+                  <button type="button" class="is-active" role="radio" aria-checked="true" data-type="expense">Wydatek</button>
+                  <button type="button" role="radio" aria-checked="false" data-type="income">Przychód</button>
+                </div>
+
+                <div class="amount-display is-expense" data-amount-display>
+                  <div class="value money--display" data-amount-value aria-live="polite">96,00 zł</div>
+                </div>
+
+                <div class="chip-row" role="radiogroup" aria-label="Kategoria" data-chip-group>
+                  <button type="button" class="chip is-selected" role="radio" aria-checked="true">Software</button>
+                  <button type="button" class="chip" role="radio" aria-checked="false">Jedzenie</button>
+                  <button type="button" class="chip" role="radio" aria-checked="false">Transport</button>
+                  <button type="button" class="chip" role="radio" aria-checked="false">Subskrypcje</button>
+                  <button type="button" class="chip" role="radio" aria-checked="false">Rachunki</button>
+                  <button type="button" class="chip" role="radio" aria-checked="false">Zakupy</button>
+                  <button type="button" class="chip" role="radio" aria-checked="false">Zdrowie</button>
+                  <button type="button" class="chip" role="radio" aria-checked="false">Rozrywka</button>
+                </div>
+
+                <div class="meta-rows surface">
+                  <div class="meta-row"><span class="k">Konto</span><span class="v">Konto główne · PLN</span></div>
+                  <div class="meta-row"><span class="k">Data</span><span class="v">Dziś</span></div>
+                </div>
+
+                <div class="numpad" data-numpad aria-label="Klawiatura kwoty">
+                  <button type="button" data-key="1">1</button>
+                  <button type="button" data-key="2">2</button>
+                  <button type="button" data-key="3">3</button>
+                  <button type="button" data-key="4">4</button>
+                  <button type="button" data-key="5">5</button>
+                  <button type="button" data-key="6">6</button>
+                  <button type="button" data-key="7">7</button>
+                  <button type="button" data-key="8">8</button>
+                  <button type="button" data-key="9">9</button>
+                  <button type="button" data-key="clear" aria-label="Wyczyść">C</button>
+                  <button type="button" data-key="0">0</button>
+                  <button type="button" class="svg-key" data-key="back" aria-label="Usuń">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6H9L4 12l5 6h9a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2z"/><path d="m14 10-4 4M10 10l4 4"/></svg>
+                  </button>
+                </div>
+
+                <div class="sheet-actions">
+                  <button type="button" class="btn btn--primary btn--block" data-submit-label>Dodaj wydatek</button>
+                  <button type="button" class="btn btn--ghost">Dodaj szczegóły</button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </figure>
+
+      <!-- ==================================================
+           EKRAN 4 — Empty State
+           ================================================== -->
+      <figure class="frame-wrap">
+        <figcaption class="frame-label">04 — Empty State</figcaption>
+        <div class="phone" data-screen="empty" aria-label="Ekran Pulpit — pusty stan">
+          <div class="screen">
+            <div class="screen-scroll">
+              <header class="pulpit-header">
+                <h1>BarthMoney<span>.</span></h1>
+                <p>Prywatne finanse, lokalnie</p>
+              </header>
+
+              <section class="balance-card empty-balance-preview surface surface--raised" aria-hidden="true">
+                <div class="balance-label">Saldo</div>
+                <div class="balance-amount money--display">0,00 zł</div>
+                <div class="balance-account">Konto główne · PLN</div>
+              </section>
+
+              <div class="empty-state">
+                <div class="empty-state__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/><circle cx="12" cy="12" r="9" opacity=".35"/></svg>
+                </div>
+                <h2>Dodaj pierwszą transakcję</h2>
+                <p>Zacznij od szybkiego wpisu lub napisz w czacie, co kupiłeś. Bez konta w chmurze.</p>
+                <button type="button" class="btn btn--primary" data-open-quick>Dodaj transakcję</button>
+                <div class="empty-trust">
+                  <div class="empty-trust__item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                    Dane tylko na urządzeniu
+                  </div>
+                  <div class="empty-trust__item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 12h16M12 4v16"/></svg>
+                    Działa offline, bez synchronizacji
+                  </div>
+                </div>
+              </div>
+
+              <div class="pulpit-cta">
+                <button type="button" class="btn btn--secondary btn--block" data-open-quick>Szybkie dodanie</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </figure>
+
+    </div>
+  </main>
+
+<script>
+(function () {
+  /* —— N4: wspólny stan ekranu (Pulpit ↔ Czat ↔ Szybkie) —— */
+  var NAV_SCREENS = { pulpit: 'pulpit', czat: 'czat', quick: 'quick', empty: 'empty' };
+  var NAV_TAB_FOR_SCREEN = { pulpit: 'pulpit', czat: 'czat', quick: 'pulpit', empty: 'pulpit' };
+  var activeScreen = 'pulpit';
+  var quickSheet = document.getElementById('quick-add');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function haptic(ms) {
+    try {
+      if (navigator.vibrate) navigator.vibrate(ms || 8);
+    } catch (err) { /* ignore */ }
+  }
+
+  function formatPlnFromCents(cents) {
+    var n = Math.max(0, Math.round(cents));
+    var whole = String(Math.floor(n / 100));
+    var frac = String(n % 100).padStart(2, '0');
+    whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return whole + ',' + frac + ' zł';
+  }
+
+  function tickBalance(el, toCents, duration) {
+    if (!el) return;
+    var from = parseInt(el.getAttribute('data-cents') || '0', 10);
+    el.setAttribute('data-cents', String(toCents));
+    if (reduceMotion || from === toCents) {
+      el.textContent = formatPlnFromCents(toCents);
+      return;
+    }
+    var start = performance.now();
+    duration = duration || 520;
+    el.classList.add('is-ticking');
+    function frame(now) {
+      var t = Math.min(1, (now - start) / duration);
+      var eased = 1 - Math.pow(1 - t, 3);
+      var current = Math.round(from + (toCents - from) * eased);
+      el.textContent = formatPlnFromCents(current);
+      if (t < 1) requestAnimationFrame(frame);
+      else el.classList.remove('is-ticking');
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function syncNavTabs(navTab) {
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(function (item) {
+      var tab = item.getAttribute('data-tab');
+      if (tab === 'transakcje' || tab === 'ustawienia') {
+        item.classList.remove('is-active');
+        item.setAttribute('aria-selected', 'false');
+        item.removeAttribute('aria-current');
+        item.setAttribute('aria-disabled', 'true');
+        return;
+      }
+      var isActive = tab === navTab;
+      item.classList.toggle('is-active', isActive);
+      item.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      item.removeAttribute('aria-disabled');
+      item.removeAttribute('title');
+      if (isActive) item.setAttribute('aria-current', 'page');
+      else item.removeAttribute('aria-current');
+    });
+  }
+
+  function focusPhone(screen) {
+    document.querySelectorAll('.phone').forEach(function (phone) {
+      var match = phone.getAttribute('data-screen') === screen;
+      phone.classList.toggle('is-focused', match);
+      if (match) {
+        phone.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    });
+  }
+
+  function openSheet() {
+    if (quickSheet) quickSheet.classList.remove('is-closed');
+  }
+
+  function closeSheet() {
+    if (quickSheet) quickSheet.classList.add('is-closed');
+  }
+
+  function setActiveScreen(screen, opts) {
+    opts = opts || {};
+    if (!NAV_SCREENS[screen]) return;
+    activeScreen = screen;
+    syncNavTabs(NAV_TAB_FOR_SCREEN[screen]);
+    focusPhone(screen);
+    if (screen === 'quick') openSheet();
+    else if (opts.closeSheet !== false) closeSheet();
+  }
+
+  /* —— P4: mount status / nav / home z <template> —— */
+  function mountPhoneChrome() {
+    var statusTpl = document.getElementById('tpl-status');
+    var navTpl = document.getElementById('tpl-nav');
+    var homeTpl = document.getElementById('tpl-home');
+    if (!statusTpl || !navTpl || !homeTpl) return;
+
+    document.querySelectorAll('.phone').forEach(function (phone) {
+      if (phone.querySelector('.status-bar')) return;
+      phone.insertBefore(statusTpl.content.cloneNode(true), phone.firstChild);
+      phone.appendChild(navTpl.content.cloneNode(true));
+      phone.appendChild(homeTpl.content.cloneNode(true));
+    });
+  }
+
+  mountPhoneChrome();
+  setActiveScreen('pulpit', { closeSheet: false });
+  openSheet(); /* ekran 3 startuje z otwartym sheetem */
+
+  /* —— N4: klik nawigacji synchronizuje wszystkie telefony —— */
+  document.querySelectorAll('.bottom-nav').forEach(function (nav) {
+    nav.addEventListener('click', function (e) {
+      var tab = e.target.closest('.nav-item');
+      if (!tab || !nav.contains(tab)) return;
+      if (tab.getAttribute('aria-disabled') === 'true') {
+        e.preventDefault();
+        return;
+      }
+      var id = tab.getAttribute('data-tab');
+      if (id === 'pulpit' || id === 'czat') setActiveScreen(id);
+    });
+  });
+
+  document.querySelectorAll('[data-open-quick]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setActiveScreen('quick');
+    });
+  });
+
+  /* —— Chipy: jeden aktywny w grupie + aria-checked —— */
+  document.querySelectorAll('[data-chip-group]').forEach(function (group) {
+    group.addEventListener('click', function (e) {
+      var chip = e.target.closest('.chip');
+      if (!chip || !group.contains(chip)) return;
+      group.querySelectorAll('.chip').forEach(function (c) {
+        c.classList.remove('is-selected');
+        c.setAttribute('aria-checked', 'false');
+      });
+      chip.classList.add('is-selected');
+      chip.setAttribute('aria-checked', 'true');
+      haptic(6);
+    });
+  });
+
+  /* —— Wydatek / Przychód —— */
+  var segment = document.querySelector('[data-segment]');
+  var amountDisplay = document.querySelector('[data-amount-display]');
+  var submitLabel = document.querySelector('[data-submit-label]');
+
+  if (segment && amountDisplay && submitLabel) {
+    segment.addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-type]');
+      if (!btn) return;
+      segment.querySelectorAll('button').forEach(function (b) {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-checked', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-checked', 'true');
+      var isIncome = btn.getAttribute('data-type') === 'income';
+      amountDisplay.classList.toggle('is-income', isIncome);
+      amountDisplay.classList.toggle('is-expense', !isIncome);
+      submitLabel.textContent = isIncome ? 'Dodaj przychód' : 'Dodaj wydatek';
+      haptic(8);
+    });
+  }
+
+  /* —— Composer: nie przeładowuj strony —— */
+  var chatForm = document.querySelector('[data-chat-form]');
+  if (chatForm) {
+    chatForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+    });
+  }
+
+  var errorForm = document.querySelector('[data-error-fix]');
+  if (errorForm) {
+    errorForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = errorForm.querySelector('input');
+      if (!input || !input.value.trim()) {
+        if (input) input.focus();
+        return;
+      }
+      var bubble = errorForm.closest('.bubble--error');
+      if (bubble) {
+        bubble.innerHTML =
+          '<div class="error-title" style="color:var(--income)">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>' +
+          'Dzięki — poprawione</div>' +
+          '<p class="error-body">Zapisuję: „' + input.value.trim().replace(/</g, '&lt;') + '”. Potwierdź szczegóły, gdy pojawią się poniżej.</p>';
+      }
+      haptic(12);
+    });
+  }
+
+  var approveBtn = document.querySelector('[data-confirm-approve]');
+  var undoToast = document.querySelector('[data-undo-toast]');
+  var undoBtn = document.querySelector('[data-undo-btn]');
+  var confirmStatus = document.querySelector('[data-confirm-status]');
+  var balanceEl = document.querySelector('[data-balance-amount]');
+  var undoTimer = null;
+  var lastApprovedCents = 8200;
+
+  function showUndo() {
+    if (!undoToast) return;
+    undoToast.classList.add('is-visible');
+    clearTimeout(undoTimer);
+    undoTimer = setTimeout(function () {
+      undoToast.classList.remove('is-visible');
+    }, 5000);
+  }
+
+  if (approveBtn) {
+    approveBtn.addEventListener('click', function () {
+      if (confirmStatus) confirmStatus.textContent = 'Zatwierdzono';
+      approveBtn.disabled = true;
+      approveBtn.textContent = 'Zapisano';
+      haptic(14);
+      if (balanceEl) {
+        var current = parseInt(balanceEl.getAttribute('data-cents') || '420400', 10);
+        tickBalance(balanceEl, current - lastApprovedCents, 560);
+      }
+      showUndo();
+    });
+  }
+
+  if (undoBtn) {
+    undoBtn.addEventListener('click', function () {
+      clearTimeout(undoTimer);
+      if (undoToast) undoToast.classList.remove('is-visible');
+      if (approveBtn) {
+        approveBtn.disabled = false;
+        approveBtn.textContent = 'Zatwierdź';
+      }
+      if (confirmStatus) confirmStatus.textContent = 'Gotowe do zatwierdzenia';
+      if (balanceEl) {
+        var current = parseInt(balanceEl.getAttribute('data-cents') || '0', 10);
+        tickBalance(balanceEl, current + lastApprovedCents, 480);
+      }
+      haptic(10);
+    });
+  }
+
+  /* —— Sheet: Zamknij + Escape → powrót do Pulpitu —— */
+  var closeBtn = document.querySelector('[data-sheet-close]');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function () {
+      setActiveScreen('pulpit');
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') setActiveScreen('pulpit');
+  });
+
+  /* —— Numpad: kwota jako grosze (string), bez float —— */
+  var amountEl = document.querySelector('[data-amount-value]');
+  var numpad = document.querySelector('[data-numpad]');
+  var digits = '9600'; /* 96,00 zł */
+
+  function formatPln(raw) {
+    var padded = (raw || '0').replace(/^0+(?=\d)/, '') || '0';
+    if (padded.length === 1) padded = '0' + padded;
+    if (padded.length === 2) padded = '0' + padded;
+    var whole = padded.slice(0, -2) || '0';
+    var frac = padded.slice(-2);
+    whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return whole + ',' + frac + ' zł';
+  }
+
+  function renderAmount() {
+    if (amountEl) amountEl.textContent = formatPln(digits);
+  }
+
+  if (numpad && amountEl) {
+    amountEl.setAttribute('aria-live', 'polite');
+    numpad.addEventListener('click', function (e) {
+      var keyBtn = e.target.closest('[data-key]');
+      if (!keyBtn) return;
+      var key = keyBtn.getAttribute('data-key');
+      haptic(8);
+
+      if (key === 'back') {
+        digits = digits.length <= 1 ? '0' : digits.slice(0, -1);
+      } else if (key === 'clear') {
+        digits = '0';
+      } else if (/^\d$/.test(key)) {
+        if (digits === '0') digits = key;
+        else if (digits.length < 9) digits += key;
+      }
+      renderAmount();
+    });
+  }
+})();
+</script>
+</body>
+</html>
